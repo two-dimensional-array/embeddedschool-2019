@@ -61,9 +61,11 @@ static void MX_SPI1_Init(void);
 void MX_USB_HOST_Process(void);
 
 /* USER CODE BEGIN PFP */
-void HeartBeat(uint32_t period, uint32_t dutycycle);
-void AllLight(uint32_t period);
-void FourLightRun(uint32_t period);
+
+void drvLEDs_HeartBeat(uint32_t period, uint32_t dutycycle);
+void drvLEDs_AllLight(uint32_t period);
+void drvLEDs_FourLightRun(uint32_t period);
+
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -105,7 +107,9 @@ int main(void)
   MX_SPI1_Init();
   MX_USB_HOST_Init();
   /* USER CODE BEGIN 2 */
+
   AllLight(5000);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -116,10 +120,15 @@ int main(void)
     MX_USB_HOST_Process();
 
     /* USER CODE BEGIN 3 */
-  FourLightRun(500);
+
+  drvLEDs_HeartBeat(500, 250);
+  drvLEDs_FourLightRun(500);
+
   }
   /* USER CODE END 3 */
 }
+
+
 
 void HeartBeat(uint32_t period, uint32_t dutycycle) {
   HAL_GPIO_WritePin(LD6_GPIO_Port, LD6_Pin, GPIO_PIN_SET);
